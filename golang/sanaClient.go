@@ -11,9 +11,9 @@ import (
 	"os"
 )
 
-const usage = "sanaClient:\n" +
-	"    -a string\n" +
-	"        取得したいTwitterアカウント"
+const usage = "Usage: \n" +
+	"    sanaClient account1 account2 account3 ...\n\n" +
+	"    取得したいTwitterアカウントを指定します。"
 
 func main() {
 	if len(os.Args) == 1 {
