@@ -4,30 +4,37 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
-const usage = "sanaClient:\n" +
-	"    -a string\n" +
-	"        取得したいTwitterアカウント"
+const usage = "Usage: \n" +
+	"    sanaClient account1 account2 account3 ...\n\n" +
+	"    取得したいTwitterアカウントを指定します。"
 
 func main() {
-	const baseurl = "http://api.moemoe.tokyo/anime/v1/twitter/follwer/"
-
-	var accounts string
-	flag.StringVar(&accounts, "a", "", "取得したいTwitterアカウント")
-	flag.Parse()
-
-	if accounts == "" {
+	if len(os.Args) == 1 {
 		fmt.Println(usage)
 		return
 	}
 
-	url := baseurl + "status?accounts=" + accounts
+	json := getSana(os.Args[1:])
+	fmt.Println(json)
+}
+
+func getSana(acount []string) string {
+	url := "http://api.moemoe.tokyo/anime/v1/twitter/follower/" +
+		"status?accounts="
+
+	for i, a := range acount {
+		if i != 0 {
+			url += ","
+		}
+		url += a
+	}
 
 	response, err := http.Get(url)
 	if err != nil {
@@ -39,7 +46,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	result := string(body)
 
-	fmt.Println(result)
+	return string(body)
 }
