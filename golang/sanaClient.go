@@ -11,6 +11,10 @@ import (
 	"net/http"
 )
 
+const usage = "sanaClient:\n" +
+	"    -a string\n" +
+	"        取得したいTwitterアカウント"
+
 func main() {
 	const baseurl = "http://api.moemoe.tokyo/anime/v1/twitter/follwer/"
 
@@ -19,6 +23,7 @@ func main() {
 	flag.Parse()
 
 	if accounts == "" {
+		fmt.Println(usage)
 		return
 	}
 
