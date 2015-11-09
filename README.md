@@ -13,7 +13,7 @@ golang
 #### Usage
 
 ```
-$ ./sanaClient account1,account2,account3...
+sanaClient account1 account2 account3 ...
 ```
 
 データを取得したい Twitter アカウントをコマンドラインで指定します.
