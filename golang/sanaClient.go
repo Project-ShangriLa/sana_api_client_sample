@@ -26,7 +26,7 @@ func main() {
 }
 
 func getSana(acount []string) string {
-	url := "http://api.moemoe.tokyo/anime/v1/twitter/follwer/" +
+	url := "http://api.moemoe.tokyo/anime/v1/twitter/follower/" +
 		"status?accounts="
 
 	for i, a := range acount {
