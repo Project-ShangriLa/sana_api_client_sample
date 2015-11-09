@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 const usage = "sanaClient:\n" +
@@ -16,8 +17,6 @@ const usage = "sanaClient:\n" +
 	"        取得したいTwitterアカウント"
 
 func main() {
-	const baseurl = "http://api.moemoe.tokyo/anime/v1/twitter/follwer/"
-
 	var accounts string
 	flag.StringVar(&accounts, "a", "", "取得したいTwitterアカウント")
 	flag.Parse()
@@ -27,7 +26,20 @@ func main() {
 		return
 	}
 
-	url := baseurl + "status?accounts=" + accounts
+	json := getSana(strings.Split(accounts, ","))
+	fmt.Println(json)
+}
+
+func getSana(acount []string) string {
+	url := "http://api.moemoe.tokyo/anime/v1/twitter/follwer/" +
+		"status?accounts="
+
+	for i, a := range acount {
+		if i != 0 {
+			url += ","
+		}
+		url += a
+	}
 
 	response, err := http.Get(url)
 	if err != nil {
@@ -39,7 +51,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	result := string(body)
 
-	fmt.Println(result)
+	return string(body)
 }
