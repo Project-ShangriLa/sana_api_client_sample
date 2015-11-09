@@ -4,12 +4,11 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
+	"os"
 )
 
 const usage = "sanaClient:\n" +
@@ -17,16 +16,12 @@ const usage = "sanaClient:\n" +
 	"        取得したいTwitterアカウント"
 
 func main() {
-	var accounts string
-	flag.StringVar(&accounts, "a", "", "取得したいTwitterアカウント")
-	flag.Parse()
-
-	if accounts == "" {
+	if len(os.Args) == 1 {
 		fmt.Println(usage)
 		return
 	}
 
-	json := getSana(strings.Split(accounts, ","))
+	json := getSana(os.Args[1:])
 	fmt.Println(json)
 }
 
