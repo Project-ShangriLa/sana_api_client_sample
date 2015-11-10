@@ -38,18 +38,7 @@ Usage:
 		url += account
 	}
 
-	response, err := http.Get(url)
-	if err != nil {
-		return "", err
-	}
-	defer response.Body.Close()
-
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return "", err
-	}
-
-	return string(body), nil
+	return getJson(url)
 }
 
 // GetFollowerHistory()関数は、引数で受け取った（アニメに関する）Twitter
@@ -82,18 +71,7 @@ Usage:
 		return "", errors.New(msg + usageString)
 	}
 
-	response, err := http.Get(url)
-	if err != nil {
-		return "", err
-	}
-	defer response.Body.Close()
-
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return "", err
-	}
-
-	return string(body), nil
+	return getJson(url)
 }
 
 // YYYY-MM-DDの形式で受け取った文字列をUnixTimestampに変換する。
@@ -126,4 +104,19 @@ func changeTime(t string) (string, error) {
 	convertTime = convertTime.Add(time.Duration(1) * time.Second)
 
 	return string(convertTime.Unix()), nil
+}
+
+func getJson(url string) (string, error) {
+	response, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return "", err
+	}
+
+	return string(body), nil
 }
