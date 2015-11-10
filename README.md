@@ -8,25 +8,24 @@ Sana (紗凪) を叩くサンプルプログラムです.
 golang
 ------
 
+大幅に変更しました。ちゃんとしたものが完成したらまた書きます。
+
+現状では、`./soraClient account1 account2 ...`のように実行すると、
+/anime/v1/twitter/follower/statusにリクエストを送り、最新のフォロワー数を
+取得します。
+
+その後、/anime/v1/twitter/follower/historyにリクエストを送ります。これの
+リクエストパラメータは、
+
+1. accountのみ指定した場合
+2. accountとend_dateを指定した場合
+
+の2種類あるので、それぞれを実行します。
+
 ### Compiling & Executing
-
-#### Usage
-
-```
-sanaClient account1 account2 account3 ...
-```
-
-データを取得したい Twitter アカウントをコマンドラインで指定します.
 
 #### Compile
 
 ```
 $ go build sanaClient.go
-```
-
-### Example
-
-```
-$ ./sanaClient usagi_anime kinmosa_anime aldnoahzero
-{"aldnoahzero":{"updated_at":1447057264,"follower":47986},"usagi_anime":{"updated_at":1447057806,"follower":134747},"kinmosa_anime":{"updated_at":1447057445,"follower":68386}}
 ```
