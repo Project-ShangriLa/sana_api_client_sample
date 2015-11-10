@@ -23,7 +23,7 @@ func main() {
 		fmt.Println(json)
 	}
 
-	json, err := sana.GetFollowerHistory("usagi_anime", "1407562541")
+	json, err := sana.GetFollowerHistory("usagi_anime", "2015-11-10")
 	if err != nil {
 		log.Fatal(err)
 	} else {
