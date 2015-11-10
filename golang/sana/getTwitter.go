@@ -4,7 +4,6 @@
 package sana
 
 import (
-	"fmt"
 	"errors"
 	"io/ioutil"
 	"net/http"
@@ -76,20 +75,28 @@ Usage:
 
 // YYYY-MM-DDの形式で受け取った文字列をUnixTimestampに変換する。
 func changeTime(t string) (string, error) {
-	var year, month, day int
+	var year, month, day, hour, minute, second int
 	var err error
 
-	str := strings.Split(t, "-")
-	if len(str) != 3 {
-		return "", errors.New("YYYY-MM-DDで指定してください。")
+	// YYYY-MM-DDとHH:ii:ssに分割する
+	date := strings.Split(t, " ")
+	if len(date) != 2 {
+		return "", errors.New("YYYY-MM-DD HH:ii:ssで指定してください。")
 	}
-	year, err = strconv.Atoi(str[0])
-	month, err = strconv.Atoi(str[1])
-	day, err = strconv.Atoi(str[2])
+
+	// 年月日の処理
+	str1 := strings.Split(date[0], "-")
+	if len(str1) != 3 {
+		return "", errors.New("年月日はYYYY-MM-DDで指定してください。")
+	}
+	year, err = strconv.Atoi(str1[0])
+	month, err = strconv.Atoi(str1[1])
+	day, err = strconv.Atoi(str1[2])
 	if err != nil {
 		return "", err
 	}
-	if year > time.Now().Format("2006") {
+	currentYear, _ := strconv.Atoi(time.Now().Format("2006"))
+	if year > currentYear {
 		return "", errors.New("年月日を正しく指定してください。")
 	}
 	if month < 1 || 12 < month {
@@ -99,8 +106,29 @@ func changeTime(t string) (string, error) {
 		return "", errors.New("年月日を正しく指定してください。")
 	}
 
+	// 時分秒の処理
+	str2 := strings.Split(date[1], ":")
+	if len(str2) != 3 {
+		return "", errors.New("時分秒はHH:ii:ssで指定してください。")
+	}
+	hour, err = strconv.Atoi(str2[0])
+	minute, err = strconv.Atoi(str2[1])
+	second, err = strconv.Atoi(str2[2])
+	if err != nil {
+		return "", err
+	}
+	if hour < 0 || 23 < hour {
+		return "", errors.New("時分秒を正しく指定してください。")
+	}
+	if minute < 0 || 59 < minute {
+		return "", errors.New("時分秒を正しく指定してください。")
+	}
+	if second < 0 || 59 < second {
+		return "", errors.New("時分秒を正しく指定してください。")
+	}
+
 	convertTime := time.Date(year, time.Month(month), day,
-		23, 59, 59, 0, time.Local)
+		hour, minute, second, 0, time.Local)
 	convertTime = convertTime.Add(time.Duration(1) * time.Second)
 
 	return string(convertTime.Unix()), nil
