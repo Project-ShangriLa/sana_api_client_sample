@@ -1,12 +1,22 @@
 package sana
 
 import (
+	"errors"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
-func GetTwitter(accounts []string) string {
+const usageString = "\nUsage: \n" +
+	"\tfunc GetTwitter(accounts []string) (string, error)\n" +
+	"\t引数で取得したツイッターアカウントが入ったスライスをを指定します。"
+
+func GetTwitter(accounts []string) (string, error) {
+	if len(accounts) == 0 {
+		msg := "空のスライスが渡されています。\n"
+		err := errors.New(msg + usageString)
+		return "", err
+	}
+
 	url := "http://api.moemoe.tokyo/anime/v1/twitter/follower/" +
 		"status?accounts="
 
@@ -19,14 +29,14 @@ func GetTwitter(accounts []string) string {
 
 	response, err := http.Get(url)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
-	return string(body)
+	return string(body), nil
 }
