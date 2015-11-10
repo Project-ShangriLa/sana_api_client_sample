@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2015 Rirei Kuroshima
+// Copyright (c) 2015 Rirei Kuroshima <rireikuroshima@icloud.com>
 //
 package sana
 
