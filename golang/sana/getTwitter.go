@@ -10,13 +10,13 @@ import (
 )
 
 const usageString = "\nUsage: \n" +
-	"\tfunc GetTwitter(accounts []string) (string, error)\n" +
+	"\tfunc GetLatestFollower(accounts []string) (string, error)\n" +
 	"\t引数で取得したツイッターアカウントが入ったスライスをを指定します。"
 
-// GetTwitter()関数は、引数で受け取った（アニメに関する）Twitterアカウントを
-// Sana（紗凪）<https://github.com/Project-ShangriLa/sana_server>に渡し、
-// 最新のフォロワー数を取得します。
-func GetTwitter(accounts []string) (string, error) {
+// GetLatestFollower()関数は、引数で受け取った（アニメに関する）Twitter
+// アカウントをSana（紗凪）<https://github.com/Project-ShangriLa/sana_server>
+// に渡し、最新のフォロワー数を取得します。
+func GetLatestFollower(accounts []string) (string, error) {
 	if len(accounts) == 0 {
 		msg := "空のスライスが渡されています。\n"
 		err := errors.New(msg + usageString)

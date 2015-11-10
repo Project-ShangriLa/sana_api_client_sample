@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	if json, err := sana.GetTwitter(os.Args[1:]); err != nil {
+	if json, err := sana.GetLatestFollower(os.Args[1:]); err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Println(json)
