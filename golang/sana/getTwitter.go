@@ -64,9 +64,9 @@ Usage:
 	url :=  baseurl + "history"
 
 	if len(args) == 1 {
-		url += "?accounts=" + args[0]
+		url += "?account=" + args[0]
 	} else if len(args) == 2 {
-		url += "?accounts=" + args[0] +
+		url += "?account=" + args[0] +
 			"&end_date=" + args[1]
 	} else {
 		const msg = "空のスライスが渡されています。\n"
