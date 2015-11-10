@@ -1,3 +1,6 @@
+//
+// Copyright (c) 2015 Rirei Kuroshima
+//
 package sana
 
 import (
