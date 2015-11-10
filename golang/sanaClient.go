@@ -16,4 +16,17 @@ func main() {
 	} else {
 		fmt.Println(json)
 	}
+
+	if json, err := sana.GetFollowerHistory("usagi_anime"); err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(json)
+	}
+
+	json, err := sana.GetFollowerHistory("usagi_anime", "1407562541")
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(json)
+	}
 }
