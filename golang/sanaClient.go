@@ -1,51 +1,33 @@
 //
-// Copyright (c) 2015 Rirei Kuroshima
+// Copyright (c) 2015 Rirei Kuroshima <rireikuroshima@icloud.com>
 //
 package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
+	"./sana"
 )
 
-const usage = "Usage: \n" +
-	"    sanaClient account1 account2 account3 ...\n\n" +
-	"    取得したいTwitterアカウントを指定します。"
-
 func main() {
-	if len(os.Args) == 1 {
-		fmt.Println(usage)
-		return
+	if json, err := sana.GetLatestFollower(os.Args[1:]); err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(json)
 	}
 
-	json := getSana(os.Args[1:])
-	fmt.Println(json)
-}
-
-func getSana(acount []string) string {
-	url := "http://api.moemoe.tokyo/anime/v1/twitter/follower/" +
-		"status?accounts="
-
-	for i, a := range acount {
-		if i != 0 {
-			url += ","
-		}
-		url += a
+	if json, err := sana.GetFollowerHistory("usagi_anime"); err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(json)
 	}
 
-	response, err := http.Get(url)
+	json, err := sana.GetFollowerHistory("usagi_anime",
+		"2015-11-10 21:04:00")
 	if err != nil {
 		log.Fatal(err)
+	} else {
+		fmt.Println(json)
 	}
-	defer response.Body.Close()
-
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return string(body)
 }
