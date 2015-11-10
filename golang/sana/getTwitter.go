@@ -9,22 +9,23 @@ import (
 	"net/http"
 )
 
-const usageString = "\nUsage: \n" +
-	"\tfunc GetLatestFollower(accounts []string) (string, error)\n" +
-	"\t引数で取得したツイッターアカウントが入ったスライスをを指定します。"
+const baseurl = "http://api.moemoe.tokyo/anime/v1/twitter/follower/"
 
 // GetLatestFollower()関数は、引数で受け取った（アニメに関する）Twitter
 // アカウントをSana（紗凪）<https://github.com/Project-ShangriLa/sana_server>
 // に渡し、最新のフォロワー数を取得します。
 func GetLatestFollower(accounts []string) (string, error) {
+	const usageString = `
+Usage:
+    func GetLatestFollower(accounts []string) (string, error)
+    引数で取得したツイッターアカウントが入ったスライスをを指定します。`
+
 	if len(accounts) == 0 {
-		msg := "空のスライスが渡されています。\n"
-		err := errors.New(msg + usageString)
-		return "", err
+		const msg = "空のスライスが渡されています。\n"
+		return "", errors.New(msg + usageString)
 	}
 
-	url := "http://api.moemoe.tokyo/anime/v1/twitter/follower/" +
-		"status?accounts="
+	url :=  baseurl + "status?accounts="
 
 	for i, account := range accounts {
 		if i != 0 {
