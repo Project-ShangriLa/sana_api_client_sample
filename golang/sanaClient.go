@@ -25,15 +25,15 @@ func main() {
 	fmt.Println(json)
 }
 
-func getSana(acount []string) string {
+func getSana(accounts []string) string {
 	url := "http://api.moemoe.tokyo/anime/v1/twitter/follower/" +
 		"status?accounts="
 
-	for i, a := range acount {
+	for i, account := range accounts {
 		if i != 0 {
 			url += ","
 		}
-		url += a
+		url += account
 	}
 
 	response, err := http.Get(url)
