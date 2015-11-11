@@ -129,9 +129,8 @@ func changeTime(t string) (string, error) {
 
 	convertTime := time.Date(year, time.Month(month), day,
 		hour, minute, second, 0, time.Local)
-	convertTime = convertTime.Add(time.Duration(1) * time.Second)
 
-	return string(convertTime.Unix()), nil
+	return strconv.Itoa(int(convertTime.Unix())), nil
 }
 
 func getJson(url string) (string, error) {
