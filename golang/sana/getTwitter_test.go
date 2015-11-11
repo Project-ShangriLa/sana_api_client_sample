@@ -1,3 +1,11 @@
+// sanaパッケージの各関数のテスト。
+//     o getJson()関数のテストの仕方がいまいち分からない
+//     o changeTest()関数はテストケースがまだ少ない
+//     o GetLatestFollower()とGetFollowerHistory()関数は、実行するたびにJSONの
+//       データが変わるので、どうやったら良いか考えるのがめんどくさい
+//     o GetFollowerHistory()関数は引数が可変で、それをどうやったらうまいこと
+//       テストが書けるのかが分からない
+// 要するに、このテストはまだまだ。
 package sana
 
 import (
@@ -9,6 +17,8 @@ import (
 	"testing"
 )
 
+// 引数にURL（sanaのURL）を指定したら、そのJSONデータを取得する関数である、
+// getJson()関数のテスト関数です。
 func TestGetJson(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
@@ -34,6 +44,7 @@ func TestGetJson(t *testing.T) {
 	}
 }
 
+// TestChangeTime()関数で使用するテストケース。
 var testdata = []struct {
 	in string
 	out string
@@ -58,6 +69,8 @@ var testdata = []struct {
 	{"2015-11-05 15:04:60", "", "時分秒を正しく指定してください。"},
 }
 
+// YYYY-MM-DD HH:ii:ss形式で渡された日時をUnix時間に変換する関数である、
+// changeTime()関数のテスト関数。
 func TestChangeTime(t *testing.T) {
 	for _, tt := range testdata {
 		actual, actualErr := changeTime(tt.in)
