@@ -44,7 +44,7 @@ Usage:
 // アカウントのフォロワー数の履歴をSana（紗凪）
 // <https://github.com/Project-ShangriLa/sana_server>から取得します。
 // 第1引数が対象のTwitterアカウント、第2引数に日時を指定します。
-// この引数はunixtimestampで指定します。`
+// この引数はYYYY-MM-DD HH:ii:ss形式で指定します。`
 func GetFollowerHistory(args ...string) (string, error) {
 	const usageString = `
 Usage:
@@ -66,7 +66,7 @@ Usage:
 		url += "?account=" + args[0] +
 			"&end_date=" + utime
 	} else {
-		const msg = "空のスライスが渡されています。\n"
+		const msg = "引数の形式が違います。\n"
 		return "", errors.New(msg + usageString)
 	}
 

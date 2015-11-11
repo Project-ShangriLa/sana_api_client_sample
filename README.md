@@ -18,7 +18,7 @@ golang
 リクエストパラメータは、
 
 1. accountのみ指定した場合
-2. accountとend_dateを指定した場合
+2. accountとend\_dateを指定した場合
 
 の2種類あるので、それぞれを実行します。
 
@@ -28,4 +28,45 @@ golang
 
 ```
 $ go build sanaClient.go
+```
+
+#### Executing
+
+```
+$ ./sanaClient account1 account2 account3 ...
+```
+
+引数で指定するアカウントは、`GetLatestFollower()`の引数として使われます。
+`GetFollowerHistory()`の実行は、
+
+1. アカウントのみ指定する場合
+2. アカウントと日時を指定する場合
+
+の2パターン実行します。アカウントは、`usagi_anime`が指定されています。また、
+日時もプログラム内に固定しているので、変更したい人は、変更後コンパイルし直して
+ください。
+
+### Testing
+
+`golang/sana`ディレクトリの中に`*_test.go`というファイルがあり、各関数の
+テストコードが書かれています。テスト内容はまだまだなので、改良する必要があり
+ます。以下、テストの結果です。
+
+```
+$ cd /path/to/golang/sana/
+$ go test .
+ok  	_/home/rirei/workspace/Project-ShangriLa/sana_api_client_sample/golang/sana	0.003s
+```
+
+また、テストの詳細を表示したい場合は、`-v`オプションを付けて実行します。
+
+```
+$ cd /path/to/golang/sana/
+$ go test -v .
+=== RUN   TestGetJson
+--- PASS: TestGetJson (0.00s)
+=== RUN   TestChangeTime
+--- PASS: TestChangeTime (0.00s)
+PASS
+ok  	_/home/rirei/workspace/Project-ShangriLa/sana_api_client_sample/golang/sana	0.003s
 ```
