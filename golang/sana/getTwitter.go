@@ -66,7 +66,7 @@ Usage:
 		url += "?account=" + args[0] +
 			"&end_date=" + utime
 	} else {
-		const msg = "空のスライスが渡されています。\n"
+		const msg = "引数の形式が違います。\n"
 		return "", errors.New(msg + usageString)
 	}
 
