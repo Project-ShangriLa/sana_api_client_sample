@@ -44,7 +44,7 @@ Usage:
 // アカウントのフォロワー数の履歴をSana（紗凪）
 // <https://github.com/Project-ShangriLa/sana_server>から取得します。
 // 第1引数が対象のTwitterアカウント、第2引数に日時を指定します。
-// この引数はYYYY-MM-DD HH:ii:ss形式で指定します。`
+// この引数は"2006-01-02 15:04:05"形式で指定します。`
 func GetFollowerHistory(args ...string) (string, error) {
 	const usageString = `
 Usage:
@@ -73,21 +73,21 @@ Usage:
 	return getJson(url)
 }
 
-// YYYY-MM-DDの形式で受け取った文字列をUnixTimestampに変換する。
+// `2006-01-02 15:04:05'の形式で受け取った文字列をUnixTimestampに変換する。
 func changeTime(t string) (string, error) {
 	var year, month, day, hour, minute, second int
 	var err error
 
-	// YYYY-MM-DDとHH:ii:ssに分割する
+	// `2006-01-02'と`15:04:05'に分割する
 	date := strings.Split(t, " ")
 	if len(date) != 2 {
-		return "", errors.New("YYYY-MM-DD HH:ii:ssで指定してください。")
+		return "", errors.New("2006-01-02 15:04:05で指定してください。")
 	}
 
 	// 年月日の処理
 	str1 := strings.Split(date[0], "-")
 	if len(str1) != 3 {
-		return "", errors.New("年月日はYYYY-MM-DDで指定してください。")
+		return "", errors.New("年月日は2006-01-02で指定してください。")
 	}
 	year, err = strconv.Atoi(str1[0])
 	month, err = strconv.Atoi(str1[1])
@@ -109,7 +109,7 @@ func changeTime(t string) (string, error) {
 	// 時分秒の処理
 	str2 := strings.Split(date[1], ":")
 	if len(str2) != 3 {
-		return "", errors.New("時分秒はHH:ii:ssで指定してください。")
+		return "", errors.New("時分秒は15:04:05で指定してください。")
 	}
 	hour, err = strconv.Atoi(str2[0])
 	minute, err = strconv.Atoi(str2[1])
