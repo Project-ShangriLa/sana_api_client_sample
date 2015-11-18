@@ -133,6 +133,7 @@ func changeTime(t string) (string, error) {
 	return strconv.Itoa(int(convertTime.Unix())), nil
 }
 
+// 引数で与えられたURL（sana）からJSONデータを取得する関数。
 func getJson(url string) (string, error) {
 	response, err := http.Get(url)
 	if err != nil {
