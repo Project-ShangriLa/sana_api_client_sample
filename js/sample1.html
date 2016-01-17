@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+      var tagetAccount = "haruta_chika"
+      var gdata1 = []
+      $.ajax({
+        type: 'GET',
+        url: 'http://api.moemoe.tokyo/anime/v1/twitter/follower/history/daily?account=' + tagetAccount + '&days=15',
+        dataType: 'json',
+        success: function(json) {
+          var len = json.length;
+          console.log(json);
+
+          for (var i = 0; i < json.length; i++) {
+            var x = json[i]
+
+            gdata1[i] = [x['yyyy-mm-dd'].substr(5), x.follower]
+              //gdata1[i] = [new Date(x.updated_at * 1000), x.follower ]
+          }
+          console.log(gdata1);
+          draw();
+        }
+      });
+
+      function draw() {
+        $('#container').highcharts({
+          chart: {
+            type: 'spline'
+          },
+          title: {
+            text: 'アニメフォロワー数の履歴'
+          },
+          subtitle: {
+            text: tagetAccount
+          },
+          xAxis: {
+            type: 'category',
+            /*
+             dateTimeLabelFormats: {
+                day: '%e. %b'
+            },*/
+            title: {
+              text: '日付'
+            }
+          },
+          yAxis: {
+            title: {
+              text: 'フォロワー数'
+            },
+            min: 0
+          },
+          tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+          },
+
+          plotOptions: {
+            spline: {
+              marker: {
+                enabled: true
+              }
+            }
+          },
+
+          series: [{
+              name: 'フォロワー数',
+              data: gdata1
+            }
+            // TODOここにならべる
+          ]
+        });
+      } //draw
+    });
+    </script>
+  <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <div id="container" style="min-width: 800px; height: 400px; margin: 0 auto"></div>
+  </body>
+</html>
