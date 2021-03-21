@@ -2,9 +2,10 @@ require 'shangrila'
 
 year = ARGV[0]
 cours = ARGV[1]
+api_host = ARGV[2]
 
 # 指定した年、クールのアニメ公式Twitterアカウントを取得(Sora[Master] API)
-master =  Shangrila::Sora.new().get_flat_data(year, cours, ['twitter_account'])
+master =  Shangrila::Sora.new(api_host).get_flat_data(year, cours, ['twitter_account'])
 
 twitter_account_list = master.flatten
 
